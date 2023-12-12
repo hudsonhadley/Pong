@@ -94,11 +94,12 @@ def hard_ai(ball_history, paddle_coord, paddle):
 
     # If it's moving backwards, bring it back to the middle
     if ball_history[0].x < ball_history[1].x:
-        if WINDOW_SIZE.height // 2 - paddle_coord.y > PADDLE_SPEED:
-            paddle.moveDown()
+        if ball_history[0].x < WINDOW_SIZE.width * 0.9:
+            if WINDOW_SIZE.height // 2 - paddle_coord.y > PADDLE_SPEED:
+                paddle.moveDown()
 
-        elif paddle_coord.y - WINDOW_SIZE.height // 2 > PADDLE_SPEED:
-            paddle.moveUp()
+            elif paddle_coord.y - WINDOW_SIZE.height // 2 > PADDLE_SPEED:
+                paddle.moveUp()
 
     else:
         predicted_y = predict_ball_y(ball_history, paddle)
