@@ -57,7 +57,7 @@ def moderate_ai(ball_history, paddle_coord, paddle):
     offset = int(abs(paddle_coord.x - current.x)) // 4
     predicted_y = predict_ball_y(ball_history, paddle) + randint(-offset, offset)
 
-    if current.x < int(WINDOW_SIZE.width * 0.7):
+    if current.x < int(WINDOW_SIZE.width * 0.8):
         if paddle_coord.y - current.y > PADDLE_SPEED:
             paddle.moveUp()
 
@@ -92,18 +92,27 @@ def moderate_ai(ball_history, paddle_coord, paddle):
 def hard_ai(ball_history, paddle_coord, paddle):
     # NOTE: YOUR IMPLEMENTATION GOES HERE
 
-    predicted_y = predict_ball_y(ball_history, paddle)
+    # If it's moving backwards, bring it back to the middle
+    if ball_history[0].x < ball_history[1].x:
+        if WINDOW_SIZE.height // 2 - paddle_coord.y > PADDLE_SPEED:
+            paddle.moveDown()
 
-    if paddle_coord.y - predicted_y > PADDLE_SPEED:
-        paddle.moveUp()
+        elif paddle_coord.y - WINDOW_SIZE.height // 2 > PADDLE_SPEED:
+            paddle.moveUp()
 
-    # if the ball is below the middle of the paddle, move down
-    elif predicted_y - paddle_coord.y > PADDLE_SPEED:
-        paddle.moveDown()
-
-    # if the paddle is on the same level as the ball don't move
     else:
-        pass
+        predicted_y = predict_ball_y(ball_history, paddle)
+
+        if paddle_coord.y - predicted_y > PADDLE_SPEED:
+            paddle.moveUp()
+
+        # if the ball is below the middle of the paddle, move down
+        elif predicted_y - paddle_coord.y > PADDLE_SPEED:
+            paddle.moveDown()
+
+        # if the paddle is on the same level as the ball don't move
+        else:
+            pass
 
 
 def distance(p1, p2):

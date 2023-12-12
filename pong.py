@@ -17,7 +17,7 @@ from settings import BLACK, GREEN
 from settings import WINDOW_SIZE, PADDLE_SIZE, BALL_SIZE, NET_SIZE, FONT_SIZE
 
 # import desired artificial intelligence as ai
-from pong_ai import moderate_ai as game_ai
+from pong_ai import hard_ai as game_ai
 
 pygame.init()
 
